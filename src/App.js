@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
 import GlobalStyle from "./GlobalStyle";
-import Login from './login/Login';
 import './App.css';
+
+import Login from './login/Login';
 import KakaoOAuth2RedirectPage from "./login/KakaoOAuth2RedirectPage";
+import RegisterTeam from "./login/RegisterTeam";
+import MatchRecord from "./tab/MatchRecord";
 
 function App() {
     const removeEvent = e => {
@@ -44,6 +48,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Login/>}/>
             <Route path="/oauth/kakao" element={<KakaoOAuth2RedirectPage/>}/>
+            <Route path="/register" element={<RegisterTeam/>}/>
+            <Route path="/home" element={<MatchRecord/>}/>
         </Routes>
     </BrowserRouter>
     );
