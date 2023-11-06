@@ -1,0 +1,148 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+    position: relative;
+    background: white;
+}
+
+.title, .section-title, .label {
+    font-family: 'Inter', sans-serif;
+    color: #3F3F3F;
+    position: static;
+}
+
+.title {
+    color: #000;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 5.5vh;
+    padding-top: 7vh;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 1rem 1.5rem;
+}
+
+.input-group {
+    flex: 1;
+    display: flex; /* Flexbox layout */
+    align-items: center; /* Vertical alignment */
+    justify-content: space-between; /* Horizontal spacing */
+    background: #F1F1F5;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3vh;
+}
+
+.input-group input, .input-group select {
+    flex: 1; /* Flex grow to fill available space */
+    margin-left: 1rem;
+    margin-right: 1rem; /* Add some spacing between elements */
+    border: none;
+    background: transparent;
+    color: #999999;
+    font-size: 1.75rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.input-group input:last-child,
+.input-group select:last-child {
+    margin-right: 0;
+}
+
+.region-select {
+    display: flex; /* Establishes a flex container */
+    justify-content: space-between; /* Distributes space between the children */
+    align-items: center; /* Aligns children vertically */
+}
+
+.age-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3vh;
+}
+
+.age-group {
+    align-items: center; /* Aligns children vertically */
+}
+
+.age-button {
+    border: none;
+    background: transparent;
+    background: #F1F1F5;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-right: 0.4rem;
+    font-size: 1.75rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.radio-button-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.custom-radio-button {
+    position: relative;
+    padding: 1rem;
+}
+
+.custom-radio-button input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.4rem solid #ddd;
+    border-radius: 50%;
+    outline: none;
+    margin-right: 0.7rem;
+}
+
+.custom-radio-button input[type="radio"]:checked {
+    border-color: #0D6EFD;
+}
+
+.radio-text {
+    display: inline-block;
+    vertical-align: auto;
+    font-size: 1.75rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.submit-button {
+    flex: 1;
+    display: flex; /* Flexbox layout */
+    background: #00A77F;
+    border-radius: 1rem;
+    padding: 2rem;
+    line-height: 2.3vh; /* Vertically center the text */
+    font-weight: 600;
+    margin-top: 8vh;
+    margin-bottom: 5vh;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* 이 부분은 div의 높이가 정해져 있어야 중앙 정렬이 가능합니다. */
+    text-align: center; /* 텍스트가 여러 줄인 경우에도 각 줄이 중앙에 오도록 합니다. */
+}
+
+.submit-text {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Media Query for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: auto;
+    }
+    .submit-button {
+        width: calc(100% - 30px);
+    }
+}

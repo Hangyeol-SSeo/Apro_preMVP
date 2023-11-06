@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
   .default-container {
     width: 100vw;
     height: calc(var(--vh, 1vh) * 100);
+    background-color: #00A77F;
   }
 `;
 

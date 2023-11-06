@@ -52,18 +52,21 @@ function KakaoOAuth2RedirectPage() {
                 })
                 .then((res) => {
                     console.log(res.id, res.kakao_account.profile.nickname);
-                    return sendUserInfoToServer(res.id, res.kakao_account.profile.nickname);
+                    return sendUserInfoToServer(res.id, res.kakao_account.profile.nickname)
+                        .then((serverResponse) => {
+                            return { serverResponse, id: res.id }; // 두 번째 .then()에 전달하기 위해 객체 반환
+                        });
                 })
-                .then((serverResponse) => {
+                .then(({serverResponse, id}) => {
                     console.log(serverResponse);  // Print the server response
 
+                    setLoading(false);  // Set loading state to false when done
                     // Assuming serverResponse.newUser is a boolean indicating whether the user is new or not
                     if (serverResponse.newUser) {
-                        navigate('/register');
+                        navigate(`/register?id=${encodeURIComponent(id)}`);
                     } else {
                         navigate('/home');
                     }
-                    setLoading(false);  // Set loading state to false when done
                 })
                 .catch((error) => {
                     console.error('Error:', error);  // Handle errors

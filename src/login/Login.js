@@ -1,6 +1,8 @@
 import React from 'react';
-import './Login.css';
+
 import '../GlobalStyle';
+import './Login.css';
+
 import GoogleLoginButton from "./GoogleLoginButton";
 
 function Login() {
@@ -15,8 +17,8 @@ function Login() {
 
     return (
         <div className="login-container default-container">
-            <h1>GOAL LOG</h1>
-            <p>간단하게 축구를 기록해보세요</p>
+            <h1 className="login-title">GOAL LOG</h1>
+            <p className="login-message">간단하게 축구를 기록해보세요</p>
             <a id="kakao-login-btn" onClick={handleKakaoLogin}>
                 <img className="kakao-login" src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" />
             </a>

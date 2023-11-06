@@ -8,9 +8,10 @@
     flex-direction: column;
 }
 
-h1 {
+.login-title {
     color: #FFF;
     text-align: center;
+    position: static;
     font-family: Inter;
     font-size: 8rem;
     font-style: normal;
@@ -22,9 +23,10 @@ h1 {
     margin-top: -15%;
 }
 
-p {
+.login-message {
     color: #FFF;
     text-align: center;
+    position: static;
     font-family: Inter;
     font-size: 2.4rem;
     font-style: normal;
@@ -33,10 +35,6 @@ p {
     letter-spacing: -0.02188rem;
     top: 50%;
     transform: translateY(-80%);
-}
-
-h1, p {
-    position: static;
 }
 
 #kakao-login-btn {
