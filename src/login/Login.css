@@ -41,5 +41,10 @@ h1, p {
 
 #kakao-login-btn {
     position: static;
-    transform: translateY(100%);
+    transform: scale(117%) translateY(100%);
+}
+
+#google-login-btn {
+    position: static;
+    transform: scale(275%) translateY(200%);
 }

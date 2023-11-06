@@ -68,6 +68,7 @@ function KakaoOAuth2RedirectPage() {
                 .catch((error) => {
                     console.error('Error:', error);  // Handle errors
                     setLoading(false);  // Set loading state to false on error
+                    alert("로그인에 실패했습니다");
                     navigate('/');
                 });
         }

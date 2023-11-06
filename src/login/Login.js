@@ -1,23 +1,26 @@
 import React from 'react';
 import './Login.css';
 import '../GlobalStyle';
+import GoogleLoginButton from "./GoogleLoginButton";
 
 function Login() {
+    // kakao login
     const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY; //REST API KEY
     const KAKAO_REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI; //Redirect URI
-    // oauth 요청 URL
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
-    const handleLogin = ()=>{
-        window.location.href = kakaoURL
+
+    const handleKakaoLogin = ()=>{
+        window.location.href = kakaoURL;
     }
 
     return (
         <div className="login-container default-container">
             <h1>GOAL LOG</h1>
             <p>간단하게 축구를 기록해보세요</p>
-            <a id="kakao-login-btn" onClick={handleLogin}>
+            <a id="kakao-login-btn" onClick={handleKakaoLogin}>
                 <img className="kakao-login" src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" />
             </a>
+            <div id="google-login-btn"><GoogleLoginButton/></div>
         </div>
     );
 }
