@@ -8,6 +8,9 @@ import Login from './login/Login';
 import KakaoOAuth2RedirectPage from "./login/KakaoOAuth2RedirectPage";
 import RegisterTeam from "./login/RegisterTeam";
 import MatchRecord from "./tab/MatchRecord";
+import ScoreBoard from "./tab/ScoreBoard";
+import CurrentMatchRecordBoard from "./tab/CurrentMatchRecordBoard";
+import HistoryAnalysis from "./tab/History";
 
 function App() {
     const removeEvent = e => {
@@ -50,6 +53,9 @@ function App() {
             <Route path="/oauth/kakao" element={<KakaoOAuth2RedirectPage/>}/>
             <Route path="/register" element={<RegisterTeam/>}/>
             <Route path="/home" element={<MatchRecord/>}/>
+            <Route path="/score/info" element={<ScoreBoard/>}/>
+            <Route path="/score/board" element={<CurrentMatchRecordBoard/>}/>
+            <Route path="/anlysis" element={<HistoryAnalysis/>}/>
         </Routes>
     </BrowserRouter>
     );
