@@ -20,6 +20,16 @@ const GlobalStyle = createGlobalStyle`
     height: calc(var(--vh, 1vh) * 100);
     background-color: #00A77F;
   }
+
+  .hamburger-menu {
+    position: fixed;
+    top: 3rem; 
+    right: 3rem;
+    width: 5rem;
+    height: 5rem;
+    z-index: 1000;
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;
