@@ -6,7 +6,7 @@ import "./Sidebar.css"
 import "../login/RegisterTeam.css"
 import {Link} from "react-router-dom";
 
-function HistoryAnalysis() {
+function ScoreBoardCurrentMatch() {
     // sidebar
     const MenuIcon = () => (
         <svg width="4rem" height="4rem" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,8 @@ function HistoryAnalysis() {
 
     // board 쿼터별 점수기록
     // JavaScript
-
+    // TODO: 화살표 누르면 점수 상승하기
+    // TODO: 세션 유지 or 세션 팅겨도 점수 기록하기
 
     return (
         <div className="default-container">
@@ -72,7 +73,7 @@ function HistoryAnalysis() {
                     {isMenuVisible ? <CloseIcon /> : <MenuIcon />}
                 </section>
 
-                <div className="title">내팀명</div>
+                <div className="title">내팀명 vs 상대팀명</div>
 
                 <form action="http://localhost:8080/match-info" method="POST">
                     <table>
@@ -213,4 +214,4 @@ function HistoryAnalysis() {
     );
 }
 
-export default HistoryAnalysis;
+export default ScoreBoardCurrentMatch

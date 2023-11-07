@@ -5,7 +5,7 @@ import "../GlobalStyle";
 import "./MatchRecord.css"
 import "./Sidebar.css"
 
-function MatchRecord() {
+function OverallMatchRecord() {
     // sidebar
     const MenuIcon = () => (
         <svg width="4rem" height="4rem" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,4 +105,4 @@ function MatchRecord() {
     );
 }
 
-export default MatchRecord;
+export default OverallMatchRecord;

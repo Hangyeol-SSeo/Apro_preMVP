@@ -7,9 +7,9 @@ import './App.css';
 import Login from './login/Login';
 import KakaoOAuth2RedirectPage from "./login/KakaoOAuth2RedirectPage";
 import RegisterTeam from "./login/RegisterTeam";
-import MatchRecord from "./tab/MatchRecord";
-import ScoreBoard from "./tab/ScoreBoard";
-import CurrentMatchRecordBoard from "./tab/CurrentMatchRecordBoard";
+import OverallMatchRecord from "./tab/OverallMatchRecord";
+import ScoreBoardInfo from "./tab/ScoreBoardInfo";
+import ScoreBoardCurrentMatch from "./tab/ScoreBoardCurrentMatch";
 import HistoryAnalysis from "./tab/History";
 
 /* localhost:8080 위치
@@ -56,9 +56,9 @@ function App() {
             <Route path="/" element={<Login/>}/>
             <Route path="/oauth/kakao" element={<KakaoOAuth2RedirectPage/>}/>
             <Route path="/register" element={<RegisterTeam/>}/>
-            <Route path="/home" element={<MatchRecord/>}/>
-            <Route path="/score/info" element={<ScoreBoard/>}/>
-            <Route path="/score/board" element={<CurrentMatchRecordBoard/>}/>
+            <Route path="/home" element={<OverallMatchRecord/>}/>
+            <Route path="/score/info" element={<ScoreBoardInfo/>}/>
+            <Route path="/score/board" element={<ScoreBoardCurrentMatch/>}/>
             <Route path="/anlysis" element={<HistoryAnalysis/>}/>
         </Routes>
     </BrowserRouter>
