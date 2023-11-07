@@ -1,0 +1,60 @@
+.hamburger-menu {
+    position: fixed;
+    top: 3rem;
+    right: 3rem;
+    width: 5rem;
+    height: 5rem;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+    position: relative;
+    background: white;
+    transition: margin-right 0.3s ease;
+}
+
+.container.shifted {
+    margin-right: 60%; /* Same as the width of the side menu */
+}
+
+.side-menu {
+    transform: translateX(100%); /* Hide menu by default, off to the right */
+    transition: transform 0.3s ease;
+    width: 60%;
+    position: fixed;
+    top: 0;
+    right: 0; /* Start off the screen */
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    z-index: 90;
+}
+
+.side-menu.show {
+    transform: translateX(0%); /* Show menu by translating it to its natural position */
+}
+
+#side-title {
+    position: fixed;
+    top: 3rem;
+    left: 3rem;
+}
+
+.side-container {
+    position: fixed;
+    top: 12rem;
+    left: 3rem;
+}
+
+.side-element {
+    display: flex;
+    align-items: center; /* This will vertically center your SVGs within the .side-element */
+    justify-content: flex-start; /* This will align your SVGs to the start (left side) */
+    gap: 2rem; /* This will add some space between your SVGs */
+    width: 100%;
+    margin-bottom: 3.5rem;
+}

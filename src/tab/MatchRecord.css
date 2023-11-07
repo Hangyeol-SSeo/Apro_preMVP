@@ -1,33 +1,3 @@
-.container {
-    width: 100vw;
-    height: 100vh;
-    margin: auto;
-    position: relative;
-    background: white;
-    transition: margin-right 0.3s ease;
-}
-
-.container.shifted {
-    margin-right: 60%; /* Same as the width of the side menu */
-}
-
-.side-menu {
-    transform: translateX(100%); /* Hide menu by default, off to the right */
-    transition: transform 0.3s ease;
-    width: 60%;
-    position: fixed;
-    top: 0;
-    right: 0; /* Start off the screen */
-    height: 100%;
-    background: white;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    z-index: 90;
-}
-
-.side-menu.show {
-    transform: translateX(0%); /* Show menu by translating it to its natural position */
-}
-
 .title-home {
     text-align: center;
     font-size: 4rem;
