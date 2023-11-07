@@ -12,6 +12,10 @@ import ScoreBoard from "./tab/ScoreBoard";
 import CurrentMatchRecordBoard from "./tab/CurrentMatchRecordBoard";
 import HistoryAnalysis from "./tab/History";
 
+/* localhost:8080 위치
+    kakaoOAuth2~ line 34
+    ScoreBorad line 73
+ */
 function App() {
     const removeEvent = e => {
         e.preventDefault();

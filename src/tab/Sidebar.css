@@ -18,7 +18,7 @@
 }
 
 .container.shifted {
-    margin-right: 60%; /* Same as the width of the side menu */
+    /*margin-right: 60%; /* Same as the width of the side menu */
 }
 
 .side-menu {
@@ -30,7 +30,6 @@
     right: 0; /* Start off the screen */
     height: 100%;
     background: white;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
     z-index: 90;
 }
 
