@@ -1,0 +1,80 @@
+.divider {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the border-radius applies */
+    border: 2px solid #D1D1D1;
+    font-size: 2.1rem;
+    table-layout: fixed; /* Use fixed table layout for equal spacing */
+}
+
+th, td {
+    padding: 1rem;
+    border: 1px solid #D1D1D1;
+    width: 25%; /* Divide by the number of columns */
+}
+
+td {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+
+.gray-row {
+    background-color: #f1f1f1;
+}
+
+
+.stat-container {
+    text-align: center;
+}
+
+.label {
+    color: #999999;
+    font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    line-height: 2.25rem;
+    margin-top: 2.5vh;
+}
+
+.percentage {
+    color: #353535;
+    font-size: 4.15rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 6.15rem;
+    margin-bottom: 2.5vh;
+}
+
+.score-section {
+    display: flex;
+    justify-content: space-around; /* This will space the child elements evenly */
+}
+
+.score-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack score-description on top of score */
+    margin-top: 3vh;
+}
+
+.score-description {
+    color: #999999;
+    font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    line-height: 2.25rem;
+}
+
+.score {
+    color: #353535;
+    font-size: 4.15rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    line-height: 6.15rem;
+}

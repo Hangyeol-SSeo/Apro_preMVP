@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import "../GlobalStyle";
-import "./ScoreBorad.css"
+import "./History.css"
 import "./Sidebar.css"
 import "../login/RegisterTeam.css"
 import {Link} from "react-router-dom";
@@ -74,138 +74,81 @@ function HistoryAnalysis() {
 
                 <div className="title">내팀명</div>
 
-                <form action="http://localhost:8080/match-info" method="POST">
-                    <table>
-                        <tbody>
-                        <tr className="gray-row">
-                            <th>쿼터</th>
-                            <th>내팀명</th>
-                            <th>상대팀명</th>
-                            <th>완료</th>
-                        </tr>
+                <table>
+                    <tbody>
+                    <tr className="gray-row">
+                        <th>승</th>
+                        <th>무</th>
+                        <th>패</th>
+                        <th>득</th>
+                        <th>실</th>
+                        <th>게임</th>
+                    </tr>
 
-                        <tr>
-                            <td>1</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr className="divider"/>
 
-                        <tr>
-                            <td>2</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
+                <div className="section-title">팀 승률 분석</div>
+                <div className="stat-container">
+                    <div className="label">우리 팀 승률</div>
+                    <div className="percentage">0.0%</div>
 
-                        <tr>
-                            <td>3</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
+                </div>
 
-                        <tr>
-                            <td>4</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
+                <hr className="divider"/>
 
-                        <tr className="gray-row">
-                            <th>총점</th>
-                            <td colSpan="2" className="score-cell">0 vs 0</td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div className="section-title">쿼터 별 평균 득점/실점</div>
+                <table>
+                    <tbody>
+                    <tr className="gray-row">
+                        <th></th>
+                        <th>1쿼터</th>
+                        <th>2쿼터</th>
+                        <th>3쿼터</th>
+                        <th>4쿼터</th>
+                    </tr>
 
-                    <button type="submit" className="submit-button"><span className="submit-text">경기 결과 제출</span></button>
-                </form>
+                    <tr>
+                        <td>득점</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+
+                    <tr>
+                        <td>실점</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr className="divider"/>
+
+                <div className="section-title">득점/실점</div>
+                <div className="score-section">
+                    <div className="score-container">
+                        <div className="score-description">경기 당 평균 득점</div>
+                        <div className="score">00점</div>
+                    </div>
+
+                    <div className="score-container">
+                        <div className="score-description">경기 당 평균 실점</div>
+                        <div className="score">00점</div>
+                    </div>
+                </div>
+
 
             </div>
 
