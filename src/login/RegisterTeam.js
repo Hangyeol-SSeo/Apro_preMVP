@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import "../GlobalStyle";
@@ -54,14 +54,20 @@ function RegisterTeam() {
         });
     };
 
-    // const handleSubmit = () => {
-    //     if (selectedAges.length === 0) {
-    //         alert('연령대를 선택해주세요.');
-    //         return;
-    //     }
-    //     const range = selectedAges.length === 1 ? selectedAges[0] : `${selectedAges[0]} ~ ${selectedAges[selectedAges.length - 1]}`;
-    //     alert(`선택된 연령대: ${range}`);
-    // };
+    const [ageRangeStart, setAgeRangeStart] = useState('');
+    const [ageRangeEnd, setAgeRangeEnd] = useState('');
+    useEffect(() => {
+        if (selectedAges.length === 0) {
+            setAgeRangeStart('');
+            setAgeRangeEnd('');
+            // 예: 사용자에게 경고를 표시하거나, 입력을 강제하는 로직을 추가할 수 있습니다.
+        } else {
+            const startAge = selectedAges[0];
+            const endAge = selectedAges[selectedAges.length - 1];
+            setAgeRangeStart(startAge);
+            setAgeRangeEnd(endAge);
+        }
+    }, [selectedAges]);
 
     // 팀 실력
     const [selectedValue, setSelectedValue] = useState('하');
@@ -75,73 +81,78 @@ function RegisterTeam() {
             <div className="container">
                 <div className="title">우리 팀 등록</div>
 
-                <div className="section-title">팀명</div>
-                <div className="input-group">
-                    <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.5 14.375V17.5H5.625L14.8417 8.28334L11.7167 5.15834L2.5 14.375ZM17.2583 5.86667C17.5833 5.54167 17.5833 5.01667 17.2583 4.69167L15.3083 2.74167C14.9833 2.41667 14.4583 2.41667 14.1333 2.74167L12.6083 4.26667L15.7333 7.39167L17.2583 5.86667Z" fill="#999999"/>
-                    </svg>
-                    <input type="text" placeholder="팀명을 입력해 주세요" />
-                </div>
+                <form action="http://localhost:8080/enroll-team" method="POST">
+                    <div className="section-title">팀명</div>
+                    <div className="input-group">
+                        <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.5 14.375V17.5H5.625L14.8417 8.28334L11.7167 5.15834L2.5 14.375ZM17.2583 5.86667C17.5833 5.54167 17.5833 5.01667 17.2583 4.69167L15.3083 2.74167C14.9833 2.41667 14.4583 2.41667 14.1333 2.74167L12.6083 4.26667L15.7333 7.39167L17.2583 5.86667Z" fill="#999999"/>
+                        </svg>
+                        <input type="text" name="team_name" placeholder="팀명을 입력해 주세요" required/>
+                    </div>
 
-                <div className="section-title">활동지역</div>
-                <div className="region-select">
-                    <div className="input-group" style={{marginRight: 20}}>
-                        <select name="sido" onChange={handleSidoChange}>
-                            {areaLists.area0.map((sido, index) => (
-                                <option key={index} value={sido}>{sido}</option>
-                            ))}
-                        </select>
+                    <div className="section-title">활동지역</div>
+                    <div className="region-select">
+                        <div className="input-group" style={{marginRight: 20}}>
+                            <select name="region_sido" onChange={handleSidoChange}>
+                                {areaLists.area0.map((sido, index) => (
+                                    <option key={index} value={sido}>{sido}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="input-group" style={{marginLeft: 20}}>
+                            <select name="region_gugun">
+                                <option>구/군 선택</option>
+                                {gugunOptions.map((gugun, index) => (
+                                    <option key={index} value={gugun}>{gugun}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                    <div className="input-group" style={{marginLeft: 20}}>
-                        <select name="gugun">
-                            <option>구/군 선택</option>
-                            {gugunOptions.map((gugun, index) => (
-                                <option key={index} value={gugun}>{gugun}</option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
 
-                <div className="section-title">선호 구장</div>
-                <div className="input-group">
-                    <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 1.66663C6.77502 1.66663 4.16669 4.27496 4.16669 7.49996C4.16669 10.975 7.85002 15.7666 9.36669 17.5916C9.70002 17.9916 10.3084 17.9916 10.6417 17.5916C12.15 15.7666 15.8334 10.975 15.8334 7.49996C15.8334 4.27496 13.225 1.66663 10 1.66663ZM10 9.58329C8.85002 9.58329 7.91669 8.64996 7.91669 7.49996C7.91669 6.34996 8.85002 5.41663 10 5.41663C11.15 5.41663 12.0834 6.34996 12.0834 7.49996C12.0834 8.64996 11.15 9.58329 10 9.58329Z" fill="#999999"/>
-                    </svg>
-                    <input type="text" placeholder="선호구장을 입력해 주세요" />
-                </div>
-                <div className="section-title">팀 연령대 (중복선택 가능)</div>
-                <div className="age-selector">
-                    <div className="age-group">
-                        {ageGroups.map((age) => (
-                            <button className="age-button"
-                                key={age}
-                                onClick={() => toggleAge(age)}
-                                style={{ backgroundColor: selectedAges.includes(age) ? '#999999' : '#F1F1F5' }}>
-                                {age}
-                            </button>
-                        ))}
+                    <div className="section-title">선호 구장</div>
+                    <div className="input-group">
+                        <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 1.66663C6.77502 1.66663 4.16669 4.27496 4.16669 7.49996C4.16669 10.975 7.85002 15.7666 9.36669 17.5916C9.70002 17.9916 10.3084 17.9916 10.6417 17.5916C12.15 15.7666 15.8334 10.975 15.8334 7.49996C15.8334 4.27496 13.225 1.66663 10 1.66663ZM10 9.58329C8.85002 9.58329 7.91669 8.64996 7.91669 7.49996C7.91669 6.34996 8.85002 5.41663 10 5.41663C11.15 5.41663 12.0834 6.34996 12.0834 7.49996C12.0834 8.64996 11.15 9.58329 10 9.58329Z" fill="#999999"/>
+                        </svg>
+                        <input type="text" name="field" placeholder="선호구장을 입력해 주세요" required/>
                     </div>
-                </div>
-                <div className="section-title">팀 실력</div>
-                <div className="radio-button-group">
-                    <label className="custom-radio-button">
-                        <input type="radio" value="하" checked={selectedValue === '하'} onChange={handleSkillChange}/>
-                        <span className="radio-text">하</span>
-                    </label>
-                    <label className="custom-radio-button">
-                        <input type="radio" value="하하" checked={selectedValue === '하하'} onChange={handleSkillChange}/>
-                        <span className="radio-text">하하</span>
-                    </label>
-                    <label className="custom-radio-button">
-                        <input type="radio" value="하하하" checked={selectedValue === '하하하'} onChange={handleSkillChange}/>
-                        <span className="radio-text">하하하</span>
-                    </label>
-                </div>
-                <div>
-                    <form action="/enroll">
-                        <div className="submit-button"><span className="submit-text">팀 등록 완료</span></div>
-                    </form>
-                </div>
+
+                    <div className="section-title">팀 연령대 (중복선택 가능)</div>
+                    <div className="age-selector">
+                        <div className="age-group">
+                            {ageGroups.map((age) => (
+                                <button className="age-button"
+                                        type="button"
+                                    key={age}
+                                    onClick={() => toggleAge(age)}
+                                    style={{ backgroundColor: selectedAges.includes(age) ? '#999999' : '#F1F1F5' }}>
+                                    {age}
+                                </button>
+                            ))}
+                        </div>
+                        <input type="hidden" name="age_range_start" value={ageRangeStart} />
+                        <input type="hidden" name="age_range_end" value={ageRangeEnd} />
+                    </div>
+
+                    <div className="section-title">팀 실력</div>
+                    <div className="radio-button-group">
+                        <label className="custom-radio-button">
+                            <input type="radio" name="competence" value="하" checked={selectedValue === '하'} onChange={handleSkillChange}/>
+                            <span className="radio-text">하</span>
+                        </label>
+                        <label className="custom-radio-button">
+                            <input type="radio" name="competence" value="하하" checked={selectedValue === '하하'} onChange={handleSkillChange}/>
+                            <span className="radio-text">하하</span>
+                        </label>
+                        <label className="custom-radio-button">
+                            <input type="radio" name="competence" value="하하하" checked={selectedValue === '하하하'} onChange={handleSkillChange}/>
+                            <span className="radio-text">하하하</span>
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" className="submit-button"><span className="submit-text">팀 등록 완료</span></button>
+                    </div>
+                </form>
 
             </div>
 
