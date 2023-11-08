@@ -122,7 +122,7 @@ function RegisterTeam() {
                         ))}
                     </div>
                 </div>
-                <div class="section-title">팀 실력</div>
+                <div className="section-title">팀 실력</div>
                 <div className="radio-button-group">
                     <label className="custom-radio-button">
                         <input type="radio" value="하" checked={selectedValue === '하'} onChange={handleSkillChange}/>
