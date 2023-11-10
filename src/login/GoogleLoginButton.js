@@ -24,6 +24,7 @@ const GoogleLoginButton = () => {
                 <GoogleLogin
                     onSuccess={credentialResponse => {
                         let response = jwtDecode(credentialResponse.credential);
+                        document.cookie = "userId=" + response.sub + "; path=/;";
                         sendUserInfoToServer(response.sub, response.name)
                             .then((serverResponse) => {
                                 console.log(serverResponse);  // Print the server response

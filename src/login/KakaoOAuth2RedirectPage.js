@@ -52,6 +52,7 @@ function KakaoOAuth2RedirectPage() {
                 })
                 .then((res) => {
                     console.log(res.id, res.kakao_account.profile.nickname);
+                    document.cookie = "userId=" + res.id + "; path=/;";
                     return sendUserInfoToServer(res.id, res.kakao_account.profile.nickname)
                         .then((serverResponse) => {
                             return { serverResponse, id: res.id }; // 두 번째 .then()에 전달하기 위해 객체 반환
@@ -63,7 +64,7 @@ function KakaoOAuth2RedirectPage() {
                     setLoading(false);  // Set loading state to false when done
                     // Assuming serverResponse.newUser is a boolean indicating whether the user is new or not
                     if (serverResponse.newUser) {
-                        navigate(`/register?id=${encodeURIComponent(id)}`);
+                        navigate('/register');
                     } else {
                         navigate('/home');
                     }

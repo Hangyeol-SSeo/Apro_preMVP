@@ -15,6 +15,7 @@ import HistoryAnalysis from "./tab/History";
 /* localhost:8080 위치
     kakaoOAuth2~ line 34
     ScoreBorad line 73
+    RegisterTeam line 84
  */
 function App() {
     const removeEvent = e => {

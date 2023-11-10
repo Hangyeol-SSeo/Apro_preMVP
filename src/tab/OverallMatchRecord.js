@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 
 import "../GlobalStyle";
@@ -24,6 +24,29 @@ function OverallMatchRecord() {
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
+
+    // 팀 정보 로드
+    const cookies = document.cookie.split('; ');
+    const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
+    const id = userIdCookie ? userIdCookie.split('=')[1] : null;
+    const [teamData, setTeamData] = useState({team_name: "내팀명", played: 0, won: 0, draw: 0, loss: 0 });
+    useEffect(() => {
+        const fetchTeamData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/team-data?id=${id}`, {
+                    method: "GET",
+                });
+                const data = await response.json();
+                console.log(data);
+                setTeamData(data);
+            } catch (error) {
+                console.error('Error fetching game data:', error);
+            }
+        };
+        fetchTeamData();
+    }, []);
+
+    // TODO: 매치 기록 로드 & 박스 만들기
 
     return (
         <div className="default-container">
@@ -63,18 +86,26 @@ function OverallMatchRecord() {
             </aside>
 
             <div className={`container ${isMenuVisible ? 'shifted' : ''}`}>
+                <section className="register-menu">
+                    <Link to="/register">
+                        <svg width="3.5rem" height="3.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.5 10.5H5.74497L13.065 3.17996C13.65 2.59496 13.65 1.63496 13.065 1.04996C12.48 0.464956 11.535 0.464956 10.95 1.04996L1.06497 10.935C0.479971 11.52 0.479971 12.465 1.06497 13.05L10.95 22.935C11.535 23.52 12.48 23.52 13.065 22.935C13.65 22.35 13.65 21.405 13.065 20.82L5.74497 13.5H22.5C23.325 13.5 24 12.825 24 12C24 11.175 23.325 10.5 22.5 10.5Z" fill="black"/>
+                        </svg>
+                    </Link>
+                </section>
+
                 <section className="hamburger-menu" onClick={toggleMenu}>
                     {isMenuVisible ? <CloseIcon /> : <MenuIcon />}
                 </section>
 
-                <div className="title-home"><span>내 팀 명</span></div>
+                <div className="title-home"><span>{teamData.team_name}</span></div>
 
                 <div className="record-summary">
                     <span className="record-summary-text">
-                        <span>00 경기 / </span>
-                        <span>00 승</span>
-                        <span>00 무</span>
-                        <span>00 패</span>
+                        <span>{teamData.played} 경기 / </span>
+                        <span>{teamData.won} 승</span>
+                        <span>{teamData.draw} 무</span>
+                        <span>{teamData.loss} 패</span>
                     </span>
                 </div>
                 <hr/>

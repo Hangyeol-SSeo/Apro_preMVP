@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import "../GlobalStyle";
 import "./RegisterTeam.css"
 
 function RegisterTeam() {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const id = queryParams.get('id'); // 'id' 쿼리 파라미터 추출
+    const cookies = document.cookie.split('; ');
+    const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
+    const id = userIdCookie ? userIdCookie.split('=')[1] : null;
     console.log(id);
 
     // 활동지역 선택
@@ -81,7 +81,8 @@ function RegisterTeam() {
             <div className="container">
                 <div className="title">우리 팀 등록</div>
 
-                <form action="http://localhost:8080/enroll-team" method="POST">
+                <form action="http://localhost:8080/enroll-team" name="team_info" method="POST">
+                    <input type="hidden" name="leader_id" value={id} />
                     <div className="section-title">팀명</div>
                     <div className="input-group">
                         <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
