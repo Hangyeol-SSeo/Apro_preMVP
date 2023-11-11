@@ -74,7 +74,7 @@ function HistoryAnalysis() {
 
                 <div className="title">내팀명</div>
 
-                <table>
+                <table className="history-a" style={{"table-layout": "fixed"}}>
                     <tbody>
                     <tr className="gray-row">
                         <th>승</th>
@@ -107,7 +107,7 @@ function HistoryAnalysis() {
                 <hr className="divider"/>
 
                 <div className="section-title">쿼터 별 평균 득점/실점</div>
-                <table>
+                <table className="history-a" style={{"table-layout": "fixed"}}>
                     <tbody>
                     <tr className="gray-row">
                         <th></th>

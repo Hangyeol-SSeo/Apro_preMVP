@@ -11,13 +11,12 @@ table {
     overflow: hidden; /* Ensures the border-radius applies */
     border: 2px solid #D1D1D1;
     font-size: 2.1rem;
-    table-layout: fixed; /* Use fixed table layout for equal spacing */
 }
 
-th, td {
+.history-a th, .history-a td {
     padding: 1rem;
     border: 1px solid #D1D1D1;
-    width: 25%; /* Divide by the number of columns */
+    width: 25%;
 }
 
 td {

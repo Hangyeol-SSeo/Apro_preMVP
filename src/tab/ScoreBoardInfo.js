@@ -49,7 +49,10 @@ function ScoreBoardInfo() {
             });
 
             if (response.ok) {
-                navigate('/score/board');
+                const data = await response.json(); // 서버로부터의 응답 데이터 추출
+                const matchId = data.match_id; // match_id 추출
+
+                navigate('/score/board', { state: { matchId } });
             } else {
                 console.error('Server responded with non-OK status');
                 navigate('/score/info');

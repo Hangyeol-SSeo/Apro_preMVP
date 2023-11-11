@@ -72,10 +72,8 @@ th:nth-child(1), td:nth-child(1) {
 
 /* Styles for the table cell containing the checkbox */
 .checkbox-cell {
-    display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
 }
 
 /* Custom checkbox styles */
@@ -83,7 +81,7 @@ th:nth-child(1), td:nth-child(1) {
     display: inline-block;
     position: relative;
     width: 70px; /* Width of the checkbox */
-    height: 70px; /* Height of the checkbox */
+    height: 95px; /* Height of the checkbox */
 }
 
 /* Hide the default checkbox */

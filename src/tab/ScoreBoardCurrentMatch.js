@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import "../GlobalStyle";
 import "./ScoreBorad.css"
 import "./Sidebar.css"
 import "../login/RegisterTeam.css"
-import {Link} from "react-router-dom";
 
 function ScoreBoardCurrentMatch() {
     // sidebar
@@ -26,8 +26,10 @@ function ScoreBoardCurrentMatch() {
         setMenuVisible(!isMenuVisible);
     };
 
-    // board 쿼터별 점수기록
-    // JavaScript
+    // match_id 가져오기
+    const location = useLocation();
+    const { matchId } = location.state || {}; // state에서 matchId 추출
+
     // TODO: 화살표 누르면 점수 상승하기
     // TODO: 세션 유지 or 세션 팅겨도 점수 기록하기
 
@@ -75,8 +77,8 @@ function ScoreBoardCurrentMatch() {
 
                 <div className="title">내팀명 vs 상대팀명</div>
 
-                <form action="http://localhost:8080/match-info" method="POST">
-                    <table>
+                <form action="http://localhost:8080/api/current-match/save" method="POST">
+                    <table className="current-game-board">
                         <tbody>
                         <tr className="gray-row">
                             <th>쿼터</th>
