@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 
 import "../GlobalStyle";
 import "./ScoreBorad.css"
 import "./Sidebar.css"
 import "../login/RegisterTeam.css"
-import {Link} from "react-router-dom";
 
 function ScoreBoardInfo() {
     // sidebar
@@ -25,6 +25,40 @@ function ScoreBoardInfo() {
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
+
+    // 쿠키 정보 로드
+    const cookies = document.cookie.split('; ');
+    const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
+    const id = userIdCookie ? userIdCookie.split('=')[1] : null;
+    const teamNameCookie = cookies.find(cookie => cookie.startsWith('team_name'));
+    const team_name = teamNameCookie ? teamNameCookie.split('=')[1] : null;
+
+    // 서버 응답에 따라 /score/board 페이지로 라우팅
+    const navigate = useNavigate();
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/enroll/match', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                navigate('/score/board');
+            } else {
+                console.error('Server responded with non-OK status');
+                navigate('/score/info');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            navigate('/home');
+        }
+    }
 
     return (
         <div className="default-container">
@@ -70,18 +104,20 @@ function ScoreBoardInfo() {
 
                 <div className="title">경기정보</div>
 
-                <form action="http://localhost:8080/match-info" method="POST">
+                <form onSubmit={handleSubmit} name="enroll-match">
+                    <input type="hidden" name="leader_id" value={id} />
+                    <input type="hidden" name="home_team_name" value={team_name} />
                     <div className="section-title">상대팀 이름</div>
                     <div className="input-group">
                         <svg width="2.8rem" height="2.8rem" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.5 14.375V17.5H5.625L14.8417 8.28334L11.7167 5.15834L2.5 14.375ZM17.2583 5.86667C17.5833 5.54167 17.5833 5.01667 17.2583 4.69167L15.3083 2.74167C14.9833 2.41667 14.4583 2.41667 14.1333 2.74167L12.6083 4.26667L15.7333 7.39167L17.2583 5.86667Z" fill="#999999"/>
                         </svg>
-                        <input type="text" name="teamName" placeholder="팀명을 입력해 주세요" required/>
+                        <input type="text" name="away_team_name" placeholder="팀명을 입력해 주세요" required/>
                     </div>
 
                     <div className="section-title">경기날짜, 시간</div>
                     <div className="input-group">
-                        <input type="datetime-local" name="matchDateTime" required/>
+                        <input type="datetime-local" name="match_date_time" required/>
                     </div>
 
                     <div className="section-title">장소</div>

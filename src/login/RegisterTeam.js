@@ -76,12 +76,39 @@ function RegisterTeam() {
         setSelectedValue(event.target.value);
     };
 
+    // 서버 응답에 따라 /home 페이지로 라우팅
+    const navigate = useNavigate();
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        // for (let [key, value] of formData.entries()) {
+        //     console.log(`${key}: ${value}`);
+        // }
+
+        try {
+            const response = await fetch('http://localhost:8080/enroll/team', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                navigate('/home');
+            } else {
+                console.error('Server responded with non-OK status');
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            navigate('/register');
+        }
+    }
+
     return (
         <div className="default-container">
             <div className="container">
                 <div className="title">우리 팀 등록</div>
 
-                <form action="http://localhost:8080/enroll-team" name="team_info" method="POST">
+                <form onSubmit={handleSubmit} name="team_info">
                     <input type="hidden" name="leader_id" value={id} />
                     <div className="section-title">팀명</div>
                     <div className="input-group">

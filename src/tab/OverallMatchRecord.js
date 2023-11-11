@@ -37,6 +37,7 @@ function OverallMatchRecord() {
                     method: "GET",
                 });
                 const data = await response.json();
+                document.cookie = "team_name=" + data.team_name + "; path=/;";
                 console.log(data);
                 setTeamData(data);
             } catch (error) {
@@ -47,6 +48,8 @@ function OverallMatchRecord() {
     }, []);
 
     // TODO: 매치 기록 로드 & 박스 만들기
+
+    // TODO: 팀 삭제, 매치 삭제
 
     return (
         <div className="default-container">
