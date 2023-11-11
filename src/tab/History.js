@@ -27,7 +27,6 @@ function HistoryAnalysis() {
     };
 
     // board 쿼터별 점수기록
-    // JavaScript
 
 
     return (

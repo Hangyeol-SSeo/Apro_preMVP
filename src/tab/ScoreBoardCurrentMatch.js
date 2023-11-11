@@ -28,9 +28,48 @@ function ScoreBoardCurrentMatch() {
 
     // match_id 가져오기
     const location = useLocation();
-    const { matchId } = location.state || {}; // state에서 matchId 추출
+    const { match_id, home_team_name, away_team_name } = location.state || {};
 
-    // TODO: 화살표 누르면 점수 상승하기
+    // console.log("Match ID:", match_id);
+    // console.log("Home Team Name:", home_team_name);
+    // console.log("Away Team Name:", away_team_name);
+
+    // 화살표 누르면 점수 상승하기
+    // 각 row의 상태를 관리하는 초기 상태
+    const initialRows = [
+        { id: 1, qGF: 0, qGA: 0, isChecked: false },
+        { id: 2, qGF: 0, qGA: 0, isChecked: false },
+        { id: 3, qGF: 0, qGA: 0, isChecked: false },
+        { id: 4, qGF: 0, qGA: 0, isChecked: false },
+    ];
+
+    const [rows, setRows] = useState(initialRows);
+
+    // 숫자 증가 함수
+    const handleIncrement = (rowId, field) => {
+        setRows(rows.map(row =>
+            row.id === rowId ? { ...row, [field]: row[field] + 1 } : row
+        ));
+    };
+
+    // 숫자 감소 함수
+    const handleDecrement = (rowId, field) => {
+        setRows(rows.map(row =>
+            row.id === rowId ? { ...row, [field]: Math.max(row[field] - 1, 0) } : row
+        ));
+    };
+
+    // 체크박스 상태 변경 함수
+    const handleCheckboxChange = (rowId) => {
+        setRows(rows.map(row =>
+            row.id === rowId ? { ...row, isChecked: !row.isChecked } : row
+        ));
+    };
+
+    // 총 점수
+    const totalGF = rows.reduce((sum, row) => sum + row.qGF, 0);
+    const totalGA = rows.reduce((sum, row) => sum + row.qGA, 0);
+
     // TODO: 세션 유지 or 세션 팅겨도 점수 기록하기
 
     return (
@@ -75,133 +114,61 @@ function ScoreBoardCurrentMatch() {
                     {isMenuVisible ? <CloseIcon /> : <MenuIcon />}
                 </section>
 
-                <div className="title">내팀명 vs 상대팀명</div>
+                <div className="title">{home_team_name} vs {away_team_name}</div>
 
                 <form action="http://localhost:8080/api/current-match/save" method="POST">
                     <table className="current-game-board">
                         <tbody>
+
                         <tr className="gray-row">
                             <th>쿼터</th>
-                            <th>내팀명</th>
-                            <th>상대팀명</th>
+                            <th>{home_team_name}</th>
+                            <th>{away_team_name}</th>
                             <th>완료</th>
                         </tr>
 
-                        <tr>
-                            <td>1</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
+                        {rows.map(row => (
+                            <tr key={row.id} style={{ backgroundColor: row.isChecked ? "#828C93" : "transparent" }}>
+                                <td>{row.id}</td>
+                                <td className="number-cell">
+                                    <div className="flex-container">
+                                        <span id={`${row.id}q-GF`} className="number">{row.qGF}</span>
+                                        <div className="elevator-buttons">
+                                    <span className="up-button" onClick={() => !row.isChecked && handleIncrement(row.id, 'qGF')}>
+                                        <svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>                                    </span>
+                                            <span className="down-button" onClick={() => !row.isChecked && handleDecrement(row.id, 'qGF')}>
+                                                <svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg>                                    </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
+                                </td>
+                                <td className="number-cell">
+                                    <div className="flex-container">
+                                        <span id={`${row.id}q-GA`} className="number">{row.qGA}</span>
+                                        <div className="elevator-buttons">
+                                    <span className="up-button" onClick={() => !row.isChecked && handleIncrement(row.id, 'qGA')}>
+                                        <svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>                                    </span>
+                                            <span className="down-button" onClick={() => !row.isChecked && handleDecrement(row.id, 'qGA')}>
+                                                <svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg>                                    </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>4</td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-our" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg>
-                                        </span><span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="number-cell">
-                                <div className="flex-container">
-                                    <span id="1q-opp" className="number">0</span>
-                                    <div className="elevator-buttons">
-                                        <span className="up-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.63398 0.499999C6.01888 -0.166667 6.98113 -0.166667 7.36603 0.5L12.1292 8.75C12.5141 9.41667 12.0329 10.25 11.2631 10.25H1.73686C0.967059 10.25 0.485935 9.41667 0.870835 8.75L5.63398 0.499999Z" fill="#D9D9D9"/></svg></span>
-                                        <span className="down-button"><svg width="1.875rem" height="1.6rem" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.36602 10.5C6.98112 11.1667 6.01887 11.1667 5.63397 10.5L0.870834 2.25C0.485934 1.58333 0.96706 0.75 1.73686 0.75L11.2631 0.75C12.0329 0.75 12.5141 1.58333 12.1292 2.25L7.36602 10.5Z" fill="#D9D9D9"/></svg></span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="checkbox-cell">
-                                <label className="custom-checkbox">
-                                    <input id="1q-check" type="checkbox"/>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </td>
-                        </tr>
+                                </td>
+                                <td className="checkbox-cell">
+                                    <label className="custom-checkbox">
+                                        <input
+                                            id={`${row.id}q-check`}
+                                            type="checkbox"
+                                            checked={row.isChecked}
+                                            onChange={() => handleCheckboxChange(row.id)}
+                                        />
+                                        <span className="checkmark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        ))}
 
                         <tr className="gray-row">
                             <th>총점</th>
-                            <td colSpan="2" className="score-cell">0 vs 0</td>
+                            <td colSpan="2" className="score-cell">{totalGF} vs {totalGA}</td>
                             <td></td>
                         </tr>
                         </tbody>

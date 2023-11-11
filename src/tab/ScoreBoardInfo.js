@@ -38,9 +38,9 @@ function ScoreBoardInfo() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
+        // for (let [key, value] of formData.entries()) {
+        //     console.log(`${key}: ${value}`);
+        // }
 
         try {
             const response = await fetch('http://localhost:8080/enroll/match', {
@@ -50,9 +50,11 @@ function ScoreBoardInfo() {
 
             if (response.ok) {
                 const data = await response.json(); // 서버로부터의 응답 데이터 추출
-                const matchId = data.match_id; // match_id 추출
+                const match_id = data.match_id;
+                const home_team_name = data.home_team_name;
+                const away_team_name = data.away_team_name;
 
-                navigate('/score/board', { state: { matchId } });
+                navigate('/score/board', { state: { match_id, home_team_name, away_team_name } });
             } else {
                 console.error('Server responded with non-OK status');
                 navigate('/score/info');
