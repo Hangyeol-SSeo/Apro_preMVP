@@ -57,7 +57,6 @@ function HistoryAnalysis() {
                 console.error('Error fetching game data:', error);
             }
         };
-        // TODO: 평균 쿼터별 데이터 fetch
         fetchTeamData();
         fetchQuarterData();
     }, []);

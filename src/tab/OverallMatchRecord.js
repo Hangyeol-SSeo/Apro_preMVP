@@ -30,6 +30,8 @@ function OverallMatchRecord() {
     const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
     const id = userIdCookie ? userIdCookie.split('=')[1] : null;
     const [teamData, setTeamData] = useState({team_name: "내팀명", played: 0, won: 0, draw: 0, loss: 0 });
+    const [matches, setMatches] = useState([]);
+
     useEffect(() => {
         const fetchTeamData = async () => {
             try {
@@ -44,12 +46,59 @@ function OverallMatchRecord() {
                 console.error('Error fetching game data:', error);
             }
         };
+        const fetchMatchData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/match-data?id=${id}`, {
+                    method: "GET",
+                });
+                const data = await response.json();
+                console.log(data);
+                setMatches(data); // 상태 업데이트
+            } catch (error) {
+                console.error('Error fetching game data:', error);
+            }
+        };
         fetchTeamData();
+        fetchMatchData();
     }, []);
 
-    // TODO: 매치 기록 로드 & 박스 만들기
-
     // TODO: 팀 삭제, 매치 삭제
+    const renderMatches = () => {
+        // 매치가 없는 경우 기본 컨테이너 반환
+        if (matches.length === 0) {
+            return <div className="match-container">No matches available</div>;
+        }
+
+        // 매치 데이터를 통해 컨테이너 생성
+        return matches.map(match => {
+            const matchDate = new Date(match.match_time);
+            const dateString = `${matchDate.getMonth() + 1}월 ${matchDate.getDate()}일`; // "11월 17일" 형식
+            const dayString = matchDate.toLocaleString('ko-KR', { weekday: 'long' }); // "월요일", "화요일" 등
+            const timeString = `${matchDate.getHours()}시`; // "17시" 형식
+
+            return (
+                <div className="match-container" key={match.match_id}>
+                    <div className="date-info">
+                        <div className="date">{dateString}</div>
+                        <div className="day">{dayString}</div>
+                    </div>
+                    <div className="match-details">
+                        <div className="team-name">{match.away_team_name}</div>
+                        <div style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <div className="match-date">{dateString}</div>
+                            <div className="day">{dayString}</div>
+                            <div className="time">{timeString}</div>
+                        </div>
+                        <div className="location">{match.location}</div>
+                    </div>
+                    <div className="match-result">
+                        <div className="result-text">{match.GF} : {match.GA}</div>
+                        <div className="outcome">{match.result}</div>
+                    </div>
+                </div>
+            );
+        });
+    };
 
     return (
         <div className="default-container">
@@ -114,25 +163,7 @@ function OverallMatchRecord() {
                 <hr/>
                 <div style={{marginBottom: '3vh'}}></div>
 
-                <div className="match-container">
-                    <div className="date-info">
-                        <div className="date">날짜</div>
-                        <div className="day">요일</div>
-                    </div>
-                    <div className="match-details">
-                        <div className="team-name">상대팀 명</div>
-                        <div style={{width: "100%",display: "flex", "justify-content": "space-between", "align-items": "center"}}>
-                            <div className="match-date">날짜</div>
-                            <div className="day">요일</div>
-                            <div className="time">시간</div>
-                        </div>
-                        <div className="location">장소</div>
-                    </div>
-                    <div className="match-result">
-                        <div className="result-text">매치결과</div>
-                        <div className="outcome">승/무/패</div>
-                    </div>
-                </div>
+                {renderMatches()}
 
             </div>
         </div>
