@@ -63,6 +63,22 @@ function OverallMatchRecord() {
     }, []);
 
     // TODO: 팀 삭제, 매치 삭제
+    const deleteMatch = async (matchId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/delete/match?id=${matchId}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                console.log("Match deleted successfully");
+                window.location.reload(); // 현재 페이지 새로고침
+            } else {
+                console.error("Failed to delete match");
+            }
+        } catch (error) {
+            console.error("Error deleting match:", error);
+        }
+    };
+
     const renderMatches = () => {
         // 매치가 없는 경우 기본 컨테이너 반환
         if (matches.length === 0) {
@@ -78,6 +94,9 @@ function OverallMatchRecord() {
 
             return (
                 <div className="match-container" key={match.match_id}>
+                    <section className="match-delete">
+                        <button onClick={() => deleteMatch(match.match_id)}>삭제</button>
+                    </section>
                     <div className="date-info">
                         <div className="date">{dateString}</div>
                         <div className="day">{dayString}</div>
