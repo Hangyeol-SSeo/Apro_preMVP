@@ -31,6 +31,7 @@ function HistoryAnalysis() {
     const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
     const id = userIdCookie ? userIdCookie.split('=')[1] : null;
     const [teamData, setTeamData] = useState({team_name: "내팀명", played: 0, won: 0, draw: 0, loss: 0, GF: 0, GA: 0 });
+    const [quarterData, setQuarterData] = useState({GF1Q: 0, GF2Q: 0, GF3Q: 0, GF4Q: 0, GA1Q: 0, GA2Q: 0, GA3Q: 0, GA4Q: 0, });
     useEffect(() => {
         const fetchTeamData = async () => {
             try {
@@ -44,8 +45,21 @@ function HistoryAnalysis() {
                 console.error('Error fetching game data:', error);
             }
         };
+        const fetchQuarterData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/quarter-data?id=${id}`, {
+                    method: "GET",
+                });
+                const data = await response.json();
+                console.log(data);
+                setQuarterData(data);
+            } catch (error) {
+                console.error('Error fetching game data:', error);
+            }
+        };
         // TODO: 평균 쿼터별 데이터 fetch
         fetchTeamData();
+        fetchQuarterData();
     }, []);
 
     return (
@@ -137,18 +151,18 @@ function HistoryAnalysis() {
 
                     <tr>
                         <td>득점</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{quarterData.GF1Q}</td>
+                        <td>{quarterData.GF2Q}</td>
+                        <td>{quarterData.GF3Q}</td>
+                        <td>{quarterData.GF4Q}</td>
                     </tr>
 
                     <tr>
                         <td>실점</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{quarterData.GA1Q}</td>
+                        <td>{quarterData.GA2Q}</td>
+                        <td>{quarterData.GA3Q}</td>
+                        <td>{quarterData.GA4Q}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -158,12 +172,12 @@ function HistoryAnalysis() {
                 <div className="score-section">
                     <div className="score-container">
                         <div className="score-description">경기 당 평균 득점</div>
-                        <div className="score">00점</div>
+                        <div className="score">{quarterData.GF1Q+quarterData.GF2Q+quarterData.GF3Q+quarterData.GF4Q}점</div>
                     </div>
 
                     <div className="score-container">
                         <div className="score-description">경기 당 평균 실점</div>
-                        <div className="score">00점</div>
+                        <div className="score">{quarterData.GA1Q+quarterData.GA2Q+quarterData.GA3Q+quarterData.GA4Q}점</div>
                     </div>
                 </div>
 

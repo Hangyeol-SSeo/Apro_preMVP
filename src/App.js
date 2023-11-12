@@ -49,7 +49,6 @@ function App() {
             window.removeEventListener('resize', setScreenSize);
         };
     }, []);
-    // TODO: 개인정보동의서 페이지 추가
 
     return (
     <BrowserRouter>
