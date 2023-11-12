@@ -28,11 +28,23 @@ function ScoreBoardCurrentMatch() {
 
     // match_id 가져오기
     const location = useLocation();
-    const { match_id, home_team_name, away_team_name } = location.state || {};
-
-    // console.log("Match ID:", match_id);
-    // console.log("Home Team Name:", home_team_name);
-    // console.log("Away Team Name:", away_team_name);
+    let { id, match_id, home_team_name, away_team_name } = location.state || {};
+    if (match_id != null) {
+        document.cookie = "match_id=" + match_id + "; path=/;";
+        document.cookie = "home_team_name=" + home_team_name + "; path=/;";
+        document.cookie = "away_team_name=" + away_team_name + "; path=/;";
+    } else {
+        const cookies = document.cookie.split('; ');
+        const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
+        id = userIdCookie ? userIdCookie.split('=')[1] : null;
+        const matchIdCookie = cookies.find(cookie => cookie.startsWith('match_id='));
+        match_id = matchIdCookie ? matchIdCookie.split('=')[1] : null;
+        const homeTeamCookie = cookies.find(cookie => cookie.startsWith('home_team_name='));
+        home_team_name = homeTeamCookie ? homeTeamCookie.split('=')[1] : null;
+        const awayTeamCookie = cookies.find(cookie => cookie.startsWith('away_team_name='));
+        away_team_name = awayTeamCookie ? awayTeamCookie.split('=')[1] : null;
+    }
+    console.log(id, match_id, home_team_name, away_team_name);
 
     // 화살표 누르면 점수 상승하기
     // 각 row의 상태를 관리하는 초기 상태
@@ -71,6 +83,45 @@ function ScoreBoardCurrentMatch() {
     const totalGA = rows.reduce((sum, row) => sum + row.qGA, 0);
 
     // TODO: 세션 유지 or 세션 팅겨도 점수 기록하기
+
+    // 경기 기록 저장 및 라우팅
+    const navigate = useNavigate();
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const data = {
+            leader_id: id,
+            match_id: match_id,
+            rows: rows.map(row => ({
+                id: row.id,
+                GF: row.qGF,
+                GA: row.qGA
+            })),
+            totalGF: rows.reduce((sum, row) => sum + row.qGF, 0),
+            totalGA: rows.reduce((sum, row) => sum + row.qGA, 0)
+        };
+        //console.log(data);
+
+        try {
+            const response = await fetch('http://localhost:8080/api/current-match', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                navigate('/home');
+            } else {
+                console.error('Server responded with non-OK status');
+                alert('error');
+                navigate('/score/board');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            navigate('/score/board');
+        }
+    }
 
     return (
         <div className="default-container">
@@ -116,7 +167,7 @@ function ScoreBoardCurrentMatch() {
 
                 <div className="title">{home_team_name} vs {away_team_name}</div>
 
-                <form action="http://localhost:8080/api/current-match/save" method="POST">
+                <form onSubmit={handleSubmit}>
                     <table className="current-game-board">
                         <tbody>
 

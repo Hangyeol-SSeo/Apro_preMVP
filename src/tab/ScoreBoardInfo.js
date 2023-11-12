@@ -54,7 +54,7 @@ function ScoreBoardInfo() {
                 const home_team_name = data.home_team_name;
                 const away_team_name = data.away_team_name;
 
-                navigate('/score/board', { state: { match_id, home_team_name, away_team_name } });
+                navigate('/score/board', { state: { id, match_id, home_team_name, away_team_name } });
             } else {
                 console.error('Server responded with non-OK status');
                 navigate('/score/info');

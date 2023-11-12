@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import "../GlobalStyle";
 import "./History.css"
@@ -27,7 +27,26 @@ function HistoryAnalysis() {
     };
 
     // board 쿼터별 점수기록
-
+    const cookies = document.cookie.split('; ');
+    const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
+    const id = userIdCookie ? userIdCookie.split('=')[1] : null;
+    const [teamData, setTeamData] = useState({team_name: "내팀명", played: 0, won: 0, draw: 0, loss: 0, GF: 0, GA: 0 });
+    useEffect(() => {
+        const fetchTeamData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/team-data?id=${id}`, {
+                    method: "GET",
+                });
+                const data = await response.json();
+                console.log(data);
+                setTeamData(data);
+            } catch (error) {
+                console.error('Error fetching game data:', error);
+            }
+        };
+        // TODO: 평균 쿼터별 데이터 fetch
+        fetchTeamData();
+    }, []);
 
     return (
         <div className="default-container">
@@ -71,7 +90,7 @@ function HistoryAnalysis() {
                     {isMenuVisible ? <CloseIcon /> : <MenuIcon />}
                 </section>
 
-                <div className="title">내팀명</div>
+                <div className="title">{teamData.team_name}</div>
 
                 <table className="history-a" style={{"table-layout": "fixed"}}>
                     <tbody>
@@ -85,12 +104,12 @@ function HistoryAnalysis() {
                     </tr>
 
                     <tr>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{teamData.won}</td>
+                        <td>{teamData.draw}</td>
+                        <td>{teamData.loss}</td>
+                        <td>{teamData.GF}</td>
+                        <td>{teamData.GA}</td>
+                        <td>{teamData.played}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -99,7 +118,7 @@ function HistoryAnalysis() {
                 <div className="section-title">팀 승률 분석</div>
                 <div className="stat-container">
                     <div className="label">우리 팀 승률</div>
-                    <div className="percentage">0.0%</div>
+                    <div className="percentage">{teamData.won/teamData.played}%</div>
 
                 </div>
 
