@@ -131,7 +131,7 @@ function HistoryAnalysis() {
                 <div className="section-title">팀 승률 분석</div>
                 <div className="stat-container">
                     <div className="label">우리 팀 승률</div>
-                    <div className="percentage">{teamData.won/teamData.played}%</div>
+                    <div className="percentage">{(teamData.won/teamData.played)*100}%</div>
 
                 </div>
 
