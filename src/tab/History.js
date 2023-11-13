@@ -35,7 +35,7 @@ function HistoryAnalysis() {
     useEffect(() => {
         const fetchTeamData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/team-data?id=${id}`, {
+                const response = await fetch(`http://www.apromatch.com:8080/api/team-data?id=${id}`, {
                     method: "GET",
                 });
                 const data = await response.json();
@@ -47,7 +47,7 @@ function HistoryAnalysis() {
         };
         const fetchQuarterData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/quarter-data?id=${id}`, {
+                const response = await fetch(`http://www.apromatch.com:8080/api/quarter-data?id=${id}`, {
                     method: "GET",
                 });
                 const data = await response.json();

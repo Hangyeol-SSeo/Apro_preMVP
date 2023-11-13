@@ -35,7 +35,7 @@ function OverallMatchRecord() {
     useEffect(() => {
         const fetchTeamData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/team-data?id=${id}`, {
+                const response = await fetch(`http://www.apromatch.com:8080/api/team-data?id=${id}`, {
                     method: "GET",
                 });
                 const data = await response.json();
@@ -48,7 +48,7 @@ function OverallMatchRecord() {
         };
         const fetchMatchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/match-data?id=${id}`, {
+                const response = await fetch(`http://www.apromatch.com:8080/api/match-data?id=${id}`, {
                     method: "GET",
                 });
                 const data = await response.json();
@@ -62,10 +62,10 @@ function OverallMatchRecord() {
         fetchMatchData();
     }, []);
 
-    // TODO: 팀 삭제, 매치 삭제
+    // 팀 삭제, 매치 삭제
     const deleteMatch = async (matchId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/delete/match?id=${matchId}`, {
+            const response = await fetch(`http://www.apromatch.com:8080/api/delete/match?id=${matchId}`, {
                 method: 'DELETE',
             });
             if (response.ok) {

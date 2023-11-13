@@ -108,7 +108,7 @@ function RegisterTeam() {
         // }
 
         try {
-            const response = await fetch('http://localhost:8080/enroll/team', {
+            const response = await fetch('http://www.apromatch.com:8080/enroll/team', {
                 method: 'POST',
                 body: formData,
             });

@@ -43,7 +43,7 @@ function ScoreBoardInfo() {
         // }
 
         try {
-            const response = await fetch('http://localhost:8080/enroll/match', {
+            const response = await fetch('http://www.apromatch.com:8080/enroll/match', {
                 method: 'POST',
                 body: formData,
             });

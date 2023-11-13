@@ -102,7 +102,7 @@ function ScoreBoardCurrentMatch() {
         //console.log(data);
 
         try {
-            const response = await fetch('http://localhost:8080/api/current-match', {
+            const response = await fetch('http://www.apromatch.com:8080/api/current-match', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

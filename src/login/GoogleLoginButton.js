@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const GoogleLoginButton = () => {
     const sendUserInfoToServer = async (id, nickname) => {
-        const response = await fetch('http://localhost:8080/user-info', {
+        const response = await fetch('http://www.apromatch.com:8080/user-info', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
