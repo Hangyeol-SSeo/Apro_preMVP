@@ -41,11 +41,11 @@ function App() {
     };
 
     useEffect(() => {
-        disableScroll();
+        //disableScroll();
         setScreenSize();
         window.addEventListener('resize', setScreenSize);
         return () => {
-            enableScroll();
+            //enableScroll();
             window.removeEventListener('resize', setScreenSize);
         };
     }, []);

@@ -171,12 +171,12 @@ function HistoryAnalysis() {
                 <div className="score-section">
                     <div className="score-container">
                         <div className="score-description">경기 당 평균 득점</div>
-                        <div className="score">{quarterData.GF1Q+quarterData.GF2Q+quarterData.GF3Q+quarterData.GF4Q}점</div>
+                        <div className="score">{+(quarterData.GF1Q + quarterData.GF2Q + quarterData.GF3Q + quarterData.GF4Q).toFixed(3)}점</div>
                     </div>
 
                     <div className="score-container">
                         <div className="score-description">경기 당 평균 실점</div>
-                        <div className="score">{quarterData.GA1Q+quarterData.GA2Q+quarterData.GA3Q+quarterData.GA4Q}점</div>
+                        <div className="score">{+(quarterData.GA1Q + quarterData.GA2Q + quarterData.GA3Q + quarterData.GA4Q).toFixed(3)}점</div>
                     </div>
                 </div>
 
