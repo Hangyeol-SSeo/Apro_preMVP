@@ -82,7 +82,12 @@ function OverallMatchRecord() {
     const renderMatches = () => {
         // 매치가 없는 경우 기본 컨테이너 반환
         if (matches.length === 0) {
-            return <div className="match-container">No matches available</div>;
+            return (
+                <div className="match-container">
+                    <p>매치가 없습니다. <Link to="/score/info"><b>매치 생성하러 가기</b></Link></p>
+                </div>
+
+            );
         }
 
         // 매치 데이터를 통해 컨테이너 생성
